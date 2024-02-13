@@ -6,11 +6,12 @@
   "type": "module",
   "scripts": {
     "start": "node backend/server.js",
-    "server": "nodemon backend/src/server.js",
+    "server": "node backend/src/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/src/seeder.js",
-    "data:destroy": "node backend/src/seeder.js -d"
+    "data:destroy": "node backend/src/seeder.js -d",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [
     "express",

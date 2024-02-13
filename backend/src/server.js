@@ -34,7 +34,22 @@ app.get("/api/config/paypal", (req, res) =>
 );
 
 const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+if (process.env.NODE_ENV === "production") {
+  console.log("Running in production mode...");
+  app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
+
+  //any route that is not api will be redirected to the index.html
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+  );
+} else {
+  app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+  app.get("/", (req, res) => {
+    res.send("API is running....");
+  });
+}
 
 // Custom error middleware
 app.use(notFound);
@@ -43,9 +58,10 @@ app.use(errorHandler);
 // Server
 const startServer = () => {
   connectDB();
-
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}...`);
+    console.log(
+      `Server running in ${process.env.NODE_ENV} mode on port ${PORT}...`
+    );
   });
 };
 

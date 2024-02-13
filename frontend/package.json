@@ -12,6 +12,7 @@
     "coffeescript": "^2.7.0",
     "flowbite": "^2.2.0",
     "flowbite-react": "^0.6.4",
+    "generated_backend": "file:..",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
